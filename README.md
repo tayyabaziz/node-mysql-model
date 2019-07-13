@@ -1,13 +1,3 @@
-# DEPRECATED
-Moved to [https://github.com/michalkow/node-mysql-backbone](https://github.com/michalkow/node-mysql-backbone)
-
-# node-mysql-model
-
-[![Build Status](https://travis-ci.org/michalkow/node-mysql-model.svg?branch=master)](https://travis-ci.org/michalkow/node-mysql-model)
-[![No Maintenance Intended](http://unmaintained.tech/badge.svg)](http://unmaintained.tech/)
-
-A [backbone](http://backbonejs.org) based model for communicating with a MySQL database using [felixge/node-mysql](https://github.com/felixge/node-mysql).
-
 ## Install
 
 Install from npm package:

@@ -26,7 +26,7 @@ var createConnection  = function (options) {
 		},		
 		// Function returning one set of results and setting it to model it was used on
 		read: function(id, callback) {
-			root=this;
+			global=this;
 			if(this.tableName) var tableName = this.tableName;
 			else var tableName = this.attributes.tableName;
 			if(!id) {
@@ -35,9 +35,10 @@ var createConnection  = function (options) {
 				callback=id;
 				id=this.attributes.id;
 			} 
-			var q = "SELECT * FROM "+tableName+" WHERE id="+id;
-			connection.query(q, root, function(err, result, fields) {
-				root.setSQL(result[0]);
+			var q = "SELECT * FROM "+tableName+" WHERE BINARY id=?";
+			q = mysql.format(q, [id]);
+			connection.query(q, global, function(err, result, fields) {
+				global.setSQL(result[0]);
 				if(callback){
 					callback(err, result[0], fields);
 				}
@@ -161,9 +162,11 @@ var createConnection  = function (options) {
 				if(this.has('id')) {
 					var id = this.get('id');
 					delete this.attributes.id;
-					var q = "UPDATE "+tableName+" SET "+ connection.escape(this.attributes)+" WHERE id="+connection.escape(id);
+					var q = "UPDATE "+tableName+" SET "+ connection.escape(this.attributes)+" WHERE BINARY id=?";
+    				q = mysql.format(q, [connection.escape(id)]);
 					this.set('id', id);
-					var check = "SELECT * FROM "+tableName+" WHERE id="+connection.escape(id);
+					var check = "SELECT * FROM "+tableName+" WHERE BINARY id=?";
+					check = mysql.format(check, [connection.escape(id)]);
 					connection.query(check, function(err, result, fields) {
 						if(result[0]){
 							connection.query(q, function(err, result) {
@@ -212,8 +215,10 @@ var createConnection  = function (options) {
 				});					
 			} else {
 				if(this.has('id')) {
-					var q = "DELETE FROM "+tableName+" WHERE id="+connection.escape(this.attributes.id);
-					var check = "SELECT * FROM "+tableName+" WHERE id="+connection.escape(this.attributes.id);
+					var q = "DELETE FROM "+tableName+" WHERE BINARY id=?";
+					q = mysql.format(q, [connection.escape(this.attributes.id)]);
+					var check = "SELECT * FROM "+tableName+" WHERE BINARY id=?";
+					check = mysql.format(check, [connection.escape(this.attributes.id)]);
 					this.clear();
 					connection.query(check, function(err, result, fields) {
 						if(result[0]){
