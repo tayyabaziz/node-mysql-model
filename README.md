@@ -3,13 +3,13 @@
 Install from npm package:
 
 ```bash
-npm install mysql-model
+npm install tayyabaziz/mysql-model
 ```
 
 Or install from git:
 
 ```bash
-npm install git://github.com/michalkow/node-mysql-model.git
+npm install git://github.com/tayyabaziz/node-mysql-model.git
 ```
 
 ## Usage
